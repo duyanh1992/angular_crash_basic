@@ -15,4 +15,18 @@ export class TasksComponent {
   ngOnInit(): void {
     this.taskService.getTasks().subscribe((tasks) => (this.tasks = tasks));
   }
+
+  handleDeleteTask(task: Task) {
+    const filteredTask = this.tasks.filter((t) => task.id !== t.id);
+
+    this.taskService
+      .deleteTask(task)
+      .subscribe(() => (this.tasks = filteredTask));
+  }
+
+  handleDblTask(task: Task) {
+    task.reminder = !task.reminder;
+
+    this.taskService.updateTaskReminder(task).subscribe();
+  }
 }
